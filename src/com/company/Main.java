@@ -1,9 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     private static final String HEDGE_1 = "Please tell me more";
@@ -12,31 +9,67 @@ public class Main {
     private static final String QUANTIFIER_1 = "Why do you say that";
     private static final String QUANTIFIER_2 = "You seem to think that";
     private static final String QUANTIFIER_3 = "So, you are concerned that";
+    public static final String ANSI_RED = "\u001B[31m";
+    private static final List<String> stringHistory = new ArrayList<>();
 
     public static void main(String[] args) {
-//        String testCase;
         String respond;
         String echoRespond;
         String hedgeAndQuantifier;
+        String respondPigLatin;
         boolean loop = true;
         HelloToUser();
         while (loop) {
             System.out.println("Enter respond here or press Q to quit:");
             respond = new Scanner(System.in).nextLine();
-            echoRespond = Echo(respond);
-            hedgeAndQuantifier = RandomRespond();
-            if (respond.equalsIgnoreCase("q")) {
-                loop = false;
+            stringHistory.add(respond);
+            if (respond.equalsIgnoreCase("red")) {
+                if (respond.equalsIgnoreCase("pig")) {
+                    respondPigLatin = PigLatin();
+                    System.out.println(ANSI_RED + respondPigLatin);
+                }
+                echoRespond = Echo(respond);
+                hedgeAndQuantifier = RandomRespond();
+                if (respond.equalsIgnoreCase("q")) {
+                    System.out.println(ANSI_RED + "***********************************************************");
+                    System.out.println(ANSI_RED + "\t\t\tHISTORY OF THE CHAT");
+                    stringHistory.forEach(x -> System.out.println(ANSI_RED + x));
+                    loop = false;
+                }
+                if (!respond.equalsIgnoreCase("q")
+                        && (hedgeAndQuantifier.equals(HEDGE_1) || hedgeAndQuantifier.equals(HEDGE_2) || hedgeAndQuantifier.equals(HEDGE_3))) {
+                    System.out.println(ANSI_RED + hedgeAndQuantifier);
+                    stringHistory.add(hedgeAndQuantifier);
+                }
+                if (!respond.equalsIgnoreCase("q")
+                        && (hedgeAndQuantifier.equals(QUANTIFIER_1) || hedgeAndQuantifier.equals(QUANTIFIER_2) || hedgeAndQuantifier.equals(QUANTIFIER_3))) {
+                    System.out.println(ANSI_RED + hedgeAndQuantifier + " " + echoRespond);
+                    stringHistory.add(hedgeAndQuantifier + " " + echoRespond);
+                }
+            } else {
+                if (respond.equalsIgnoreCase("pig")) {
+                    respondPigLatin = PigLatin();
+                    System.out.println(respondPigLatin);
+                }
+                echoRespond = Echo(respond);
+                hedgeAndQuantifier = RandomRespond();
+                if (respond.equalsIgnoreCase("q")) {
+                    System.out.println("***********************************************************");
+                    System.out.println("\t\t\tHISTORY OF THE CHAT");
+                    stringHistory.forEach(System.out::println);
+                    loop = false;
+                }
+                if (!respond.equalsIgnoreCase("q")
+                        && (hedgeAndQuantifier.equals(HEDGE_1) || hedgeAndQuantifier.equals(HEDGE_2) || hedgeAndQuantifier.equals(HEDGE_3))) {
+                    System.out.println(hedgeAndQuantifier);
+                    stringHistory.add(hedgeAndQuantifier);
+                }
+                if (!respond.equalsIgnoreCase("q")
+                        && (hedgeAndQuantifier.equals(QUANTIFIER_1) || hedgeAndQuantifier.equals(QUANTIFIER_2) || hedgeAndQuantifier.equals(QUANTIFIER_3))) {
+                    System.out.println(hedgeAndQuantifier + " " + echoRespond);
+                    stringHistory.add(hedgeAndQuantifier + " " + echoRespond);
+                }
             }
-            if (!respond.equalsIgnoreCase("q")
-                    && (hedgeAndQuantifier.equals(HEDGE_1) || hedgeAndQuantifier.equals(HEDGE_2) || hedgeAndQuantifier.equals(HEDGE_3))) {
-                System.out.println(hedgeAndQuantifier);
-            }
-            if (!respond.equalsIgnoreCase("q")
-                    && (hedgeAndQuantifier.equals(QUANTIFIER_1) || hedgeAndQuantifier.equals(QUANTIFIER_2) || hedgeAndQuantifier.equals(QUANTIFIER_3))) {
-                System.out.println(hedgeAndQuantifier + " " + echoRespond);
-            }
-
         }
     }
 
@@ -122,5 +155,52 @@ public class Main {
         myRandomSentences.add(QUANTIFIER_2);
         myRandomSentences.add(QUANTIFIER_3);
         return myRandomSentences.get(new Random().nextInt(6));
+    }
+
+    private static String PigLatin() {
+        final String AY = "AY";
+        final String WAY = "WAY";
+        final String TAY = "TAY";
+        final String SPACE = " ";
+        String prompt;
+
+        StringBuilder holders2 = new StringBuilder();
+        int randomNum;
+        List<String> wordArrayList = new ArrayList<>();
+
+        System.out.println("\tPlease Type Something: ");
+        prompt = new Scanner(System.in).nextLine();
+        stringHistory.add(prompt);
+        prompt.toUpperCase();
+        String[] split = prompt.split(" ");
+        Collections.addAll(wordArrayList, split);
+
+        for (String word : wordArrayList) {
+            if (word.startsWith("a") || word.startsWith("A")) {
+                holders2.append(word).append(AY).append(SPACE);
+            } else if (word.startsWith("e") || word.startsWith("E")) {
+                holders2.append(word).append(AY).append(SPACE);
+            } else if (word.startsWith("i") || word.startsWith("I")) {
+                holders2.append(word).append(AY).append(SPACE);
+            } else if (word.startsWith("o") || word.startsWith("O")) {
+                holders2.append(word).append(AY).append(SPACE);
+            } else if (word.startsWith("u") || word.startsWith("U")) {
+                holders2.append(word).append(AY).append(SPACE);
+            } else {
+                randomNum = new Random().nextInt(2);
+                if (randomNum == 0) {
+                    holders2.append(word).append(WAY).append(SPACE);
+                }
+                if (randomNum == 1) {
+                    holders2.append(word).append(TAY).append(SPACE);
+                }
+            }
+        }
+        stringHistory.add(holders2.toString());
+        return holders2.toString();
+    }
+
+    private static void Game() {
+
     }
 }
