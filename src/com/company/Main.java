@@ -102,48 +102,117 @@ public class Main {
 
     private static String Echo(String respond) {
         String result = "";
-        String result1;
+        String result1 = "";
         String result2 = "";
+        String space = " ";
+        int index = 0;
+        List<String> verifyList = new ArrayList<>();
+        for (String word : respond.split(" ")) {
+//            if (word.matches("[A-Za-z]")) {
+                verifyList.add(word);
+//                continue;
+//            }
+//            else {
+//                verifyList.add(word);
+//            }
+        }
 
-        respond.toLowerCase();
-        if (respond.contains("I") || respond.contains("i")) {
-            result = respond.replaceAll("I", "you");
-            if (result.contains("am") || result.contains("Am")) {
-                result1 = result.replaceAll("am", "are");
-                if (result1.contains("my") || result1.contains("My")) {
-                    result2 = result1.replaceAll("my", "your");
-                    if (result2.contains("me") || result2.contains("Me")) {
-                        return result2.replaceAll("me", "you").toUpperCase();
-                    }
-                    if (!result2.contains("me") || !result2.contains("Me")) {
-                        return result2.toUpperCase();
-                    }
-                }
-                if (!result1.contains("my") || !result1.contains("My") ||
-                        !result2.contains("me") || !result2.contains("Me")) {
-                    return result1.toUpperCase();
-                }
+
+
+        for (int i = 0; i < verifyList.size(); i++) {
+            if (verifyList.get(i).equalsIgnoreCase("I")&& verifyList.get(i).contains(",")) {
+
+                    verifyList.set(i, "you");
+
+            }
+
+            if (verifyList.get(i).equalsIgnoreCase("am")) {
+                verifyList.set(i, "are");
+            }
+            if (verifyList.get(i).equalsIgnoreCase("my")) {
+                verifyList.set(i, "your");
+            }
+            if (verifyList.get(i).equalsIgnoreCase("me")) {
+                verifyList.set(i, "you");
+            }
+            if (verifyList.get(i).equalsIgnoreCase("me") && verifyList.get(i).substring(1).equalsIgnoreCase(",")) {
+                verifyList.set(i, "you");
             }
         }
-        if (respond.contains("my") || respond.contains("My")) {
-            result1 = result.replaceAll("my", "your");
-            if (result1.contains("me") || result1.contains("Me")) {
-                return result1.replaceAll("me", "you").toUpperCase();
-            }
-            if (!result1.contains("me") || !result1.contains("Me")) {
-                return result1.toUpperCase();
-            }
+//        System.out.println(verifyList);
+//        respond.toLowerCase();
+        for (int i = 0; i < verifyList.size(); i++) {
+            result += verifyList.get(i) + " ";
         }
-        if (respond.contains("me") || respond.contains("Me")) {
-            result1 = result.replaceAll("me", "you");
-            if (result1.contains("my") || result1.contains("My")) {
-                return result1.replaceAll("my", "your").toUpperCase();
-            }
-            if (!result1.contains("my") || !result1.contains("My")) {
-                return result1.toUpperCase();
-            }
-        }
-        return respond.toUpperCase();
+        return result;
+//        if (respond.contains("I") || respond.contains("i")) {
+//            result = respond.replaceAll("I", "you");
+//            if (result.contains("am") || result.contains("Am")) {
+//
+//                result1 = result.replaceAll("am", "are");
+//
+//                if (result1.contains("my") || result1.contains("My")) {
+//                    result2 = result1.replaceAll("my", "your");
+//                    if (result2.contains("me") || result2.contains("Me")) {
+//                        return result2.replaceAll("me", "you").toUpperCase();
+//                    }
+//                    if (!result2.contains("me") || !result2.contains("Me")) {
+//                        return result2.toUpperCase();
+//                    }
+//                }
+//                if (!result1.contains("my") || !result1.contains("My") ||
+//                        !result2.contains("me") || !result2.contains("Me")) {
+//                    return result1.toUpperCase();
+//                }
+//            }
+//            if (!result.contains("am") || !result.contains("Am")) {
+//                if (result.contains("my") || result.contains("My")) {
+//                    result1 = result.replaceAll("my", "your");
+//                    if (result1.contains("me") || result1.contains("Me")) {
+//                        return result1.replaceAll("me", "you").toUpperCase();
+//                    }
+//                    if (!result1.contains("me") || !result1.contains("Me")) {
+//                        return result1.toUpperCase();
+//                    }
+//
+//                }
+//                if (!result.contains("my") || result.contains("My")) {
+//                    if (result.contains("me") || result.contains("Me")) {
+//                        return result.replaceAll("me", "you").toUpperCase();
+//                    }
+//                    if (result.contains("me") || result.contains("Me")) {
+//                        return result.toUpperCase();
+//                    }
+//                }
+//                return result.toUpperCase();
+//            }
+//        }
+//
+//        if (respond.contains("my") || respond.contains("My")) {
+//            result1 = result.replaceAll("my", "your");
+//            if (result1.contains("me") || result1.contains("Me")) {
+//                return result1.replaceAll("me", "you").toUpperCase();
+//            }
+//            if (!result1.contains("me") || !result1.contains("Me")) {
+//                return result1.toUpperCase();
+//            }
+//            if (result1.contains("am"))
+//                return result1.toUpperCase();
+//
+//        }
+//        if (respond.contains("me") || respond.contains("Me")) {
+//            result1 = result.replaceAll("me", "you");
+//            if (result1.contains("my") || result1.contains("My")) {
+//                return result1.replaceAll("my", "your").toUpperCase();
+//            }
+//            if (!result1.contains("my") || !result1.contains("My")) {
+//                return result1.toUpperCase();
+//            }
+//            if (result1.contains("am"))
+//                return result1.toUpperCase();
+//
+//        }
+//        return respond.toUpperCase();
     }
 
     private static String RandomRespond() {
