@@ -150,7 +150,7 @@ public class Main {
             if (verifyList.get(i).equalsIgnoreCase("I")) {
                 verifyList.set(i, "you");
             }
-            if (verifyList.get(i).matches("I[,?:'; ]")) {
+            if (verifyList.get(i).matches("i[,?:'; ]")) {
                 verifyList.set(i, StringWithSymbol(verifyList.get(i)));
             }
             if (verifyList.get(i).equalsIgnoreCase("am")) {
@@ -234,23 +234,23 @@ public class Main {
     private static String StringWithSymbol(String word) {
         String result = "";
         switch (word) {
-            case "I,":
+            case "i,":
             case "me,":
                 result = "you,";
                 break;
-            case "I:":
+            case "i:":
             case "me:":
                 result = "you:";
                 break;
-            case "I;":
+            case "i;":
             case "me;":
                 result = "you;";
                 break;
-            case "I?":
+            case "i?":
             case "me?":
                 result = "you?";
                 break;
-            case "I'":
+            case "i'":
             case "me'":
                 result = "you'";
                 break;
