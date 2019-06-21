@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class Main {
     private static final String HEDGE_1 = "Please tell me more";
@@ -9,7 +10,7 @@ public class Main {
     private static final String QUANTIFIER_1 = "Why do you say that";
     private static final String QUANTIFIER_2 = "You seem to think that";
     private static final String QUANTIFIER_3 = "So, you are concerned that";
-    public static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_RED = "\u001B[31m";
     private static final List<String> stringHistory = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -18,22 +19,36 @@ public class Main {
         String hedgeAndQuantifier;
         String respondPigLatin;
         boolean loop = true;
+        boolean isRed;
         HelloToUser();
         while (loop) {
             System.out.println("Enter respond here or press Q to quit:");
             respond = new Scanner(System.in).nextLine();
             stringHistory.add(respond);
             if (respond.equalsIgnoreCase("red")) {
+                isRed = true;
                 if (respond.equalsIgnoreCase("pig")) {
                     respondPigLatin = PigLatin();
                     System.out.println(ANSI_RED + respondPigLatin);
+                }
+                if (respond.equalsIgnoreCase("play game")) {
+
+                    StartGame(isRed);
                 }
                 echoRespond = Echo(respond);
                 hedgeAndQuantifier = RandomRespond();
                 if (respond.equalsIgnoreCase("q")) {
                     System.out.println(ANSI_RED + "***********************************************************");
-                    System.out.println(ANSI_RED + "\t\t\tHISTORY OF THE CHAT");
-                    stringHistory.forEach(x -> System.out.println(ANSI_RED + x));
+                    System.out.println(ANSI_RED + "\t\t\t\tHISTORY OF THE CHAT");
+
+                    IntStream.range(0, stringHistory.size()).forEach(i -> {
+                        if (i % 2 == 0) {
+                            System.out.println(ANSI_RED + "You: " + stringHistory.get(i) + "\n");
+                        }
+                        if (i % 2 != 0) {
+                            System.out.println(ANSI_RED + "Eliza: " + stringHistory.get(i) + "\n");
+                        }
+                    });
                     loop = false;
                 }
                 if (!respond.equalsIgnoreCase("q")
@@ -47,16 +62,27 @@ public class Main {
                     stringHistory.add(hedgeAndQuantifier + " " + echoRespond);
                 }
             } else {
+                isRed = false;
                 if (respond.equalsIgnoreCase("pig")) {
                     respondPigLatin = PigLatin();
                     System.out.println(respondPigLatin);
+                }
+                if (respond.equalsIgnoreCase("play game")) {
+                    StartGame(isRed);
                 }
                 echoRespond = Echo(respond);
                 hedgeAndQuantifier = RandomRespond();
                 if (respond.equalsIgnoreCase("q")) {
                     System.out.println("***********************************************************");
-                    System.out.println("\t\t\tHISTORY OF THE CHAT");
-                    stringHistory.forEach(System.out::println);
+                    System.out.println("\t\t\t\tHISTORY OF THE CHAT");
+                    IntStream.range(0, stringHistory.size()).forEach(i -> {
+                        if (i % 2 == 0) {
+                            System.out.println("You: " + stringHistory.get(i) + "\n");
+                        }
+                        if (i % 2 != 0) {
+                            System.out.println("Eliza: " + stringHistory.get(i) + "\n");
+                        }
+                    });
                     loop = false;
                 }
                 if (!respond.equalsIgnoreCase("q")
@@ -102,117 +128,41 @@ public class Main {
 
     private static String Echo(String respond) {
         String result = "";
-        String result1 = "";
-        String result2 = "";
-        String space = " ";
-        int index = 0;
         List<String> verifyList = new ArrayList<>();
         for (String word : respond.split(" ")) {
-//            if (word.matches("[A-Za-z]")) {
-                verifyList.add(word);
-//                continue;
-//            }
-//            else {
-//                verifyList.add(word);
-//            }
+            verifyList.add(word.toLowerCase());
         }
 
-
-
         for (int i = 0; i < verifyList.size(); i++) {
-            if (verifyList.get(i).equalsIgnoreCase("I")&& verifyList.get(i).contains(",")) {
-
-                    verifyList.set(i, "you");
-
+            if (verifyList.get(i).equalsIgnoreCase("I")) {
+                verifyList.set(i, "you");
             }
-
+            if (verifyList.get(i).matches("I[,?:'; ]")) {
+                verifyList.set(i, StringWithSymbol(verifyList.get(i)));
+            }
             if (verifyList.get(i).equalsIgnoreCase("am")) {
                 verifyList.set(i, "are");
             }
             if (verifyList.get(i).equalsIgnoreCase("my")) {
                 verifyList.set(i, "your");
             }
+            if (verifyList.get(i).matches("my[,?:'; ]")) {
+                verifyList.set(i, StringWithSymbol(verifyList.get(i)));
+            }
             if (verifyList.get(i).equalsIgnoreCase("me")) {
                 verifyList.set(i, "you");
             }
-            if (verifyList.get(i).equalsIgnoreCase("me") && verifyList.get(i).substring(1).equalsIgnoreCase(",")) {
-                verifyList.set(i, "you");
+            if (verifyList.get(i).matches("me[,?:'; ]")) {
+                verifyList.set(i, StringWithSymbol(verifyList.get(i)));
             }
+
         }
-//        System.out.println(verifyList);
-//        respond.toLowerCase();
+
         for (int i = 0; i < verifyList.size(); i++) {
             result += verifyList.get(i) + " ";
         }
-        return result;
-//        if (respond.contains("I") || respond.contains("i")) {
-//            result = respond.replaceAll("I", "you");
-//            if (result.contains("am") || result.contains("Am")) {
-//
-//                result1 = result.replaceAll("am", "are");
-//
-//                if (result1.contains("my") || result1.contains("My")) {
-//                    result2 = result1.replaceAll("my", "your");
-//                    if (result2.contains("me") || result2.contains("Me")) {
-//                        return result2.replaceAll("me", "you").toUpperCase();
-//                    }
-//                    if (!result2.contains("me") || !result2.contains("Me")) {
-//                        return result2.toUpperCase();
-//                    }
-//                }
-//                if (!result1.contains("my") || !result1.contains("My") ||
-//                        !result2.contains("me") || !result2.contains("Me")) {
-//                    return result1.toUpperCase();
-//                }
-//            }
-//            if (!result.contains("am") || !result.contains("Am")) {
-//                if (result.contains("my") || result.contains("My")) {
-//                    result1 = result.replaceAll("my", "your");
-//                    if (result1.contains("me") || result1.contains("Me")) {
-//                        return result1.replaceAll("me", "you").toUpperCase();
-//                    }
-//                    if (!result1.contains("me") || !result1.contains("Me")) {
-//                        return result1.toUpperCase();
-//                    }
-//
-//                }
-//                if (!result.contains("my") || result.contains("My")) {
-//                    if (result.contains("me") || result.contains("Me")) {
-//                        return result.replaceAll("me", "you").toUpperCase();
-//                    }
-//                    if (result.contains("me") || result.contains("Me")) {
-//                        return result.toUpperCase();
-//                    }
-//                }
-//                return result.toUpperCase();
-//            }
-//        }
-//
-//        if (respond.contains("my") || respond.contains("My")) {
-//            result1 = result.replaceAll("my", "your");
-//            if (result1.contains("me") || result1.contains("Me")) {
-//                return result1.replaceAll("me", "you").toUpperCase();
-//            }
-//            if (!result1.contains("me") || !result1.contains("Me")) {
-//                return result1.toUpperCase();
-//            }
-//            if (result1.contains("am"))
-//                return result1.toUpperCase();
-//
-//        }
-//        if (respond.contains("me") || respond.contains("Me")) {
-//            result1 = result.replaceAll("me", "you");
-//            if (result1.contains("my") || result1.contains("My")) {
-//                return result1.replaceAll("my", "your").toUpperCase();
-//            }
-//            if (!result1.contains("my") || !result1.contains("My")) {
-//                return result1.toUpperCase();
-//            }
-//            if (result1.contains("am"))
-//                return result1.toUpperCase();
-//
-//        }
-//        return respond.toUpperCase();
+        return result.toUpperCase();
+
     }
 
     private static String RandomRespond() {
@@ -269,7 +219,93 @@ public class Main {
         return holders2.toString();
     }
 
-    private static void Game() {
+    private static String StringWithSymbol(String word) {
+        String result = "";
+        switch (word) {
+            case "I,":
+            case "me,":
+                result = "you,";
+                break;
+            case "I:":
+            case "me:":
+                result = "you:";
+                break;
+            case "I;":
+            case "me;":
+                result = "you;";
+                break;
+            case "I?":
+            case "me?":
+                result = "you?";
+                break;
+            case "I'":
+            case "me'":
+                result = "you'";
+                break;
+            case "my,":
+                result = "your,";
+                break;
+            case "my:":
+                result = "your:";
+                break;
+            case "my;":
+                result = "your;";
+                break;
+            case "my?":
+                result = "your?";
+                break;
+            case "my'":
+                result = "your'";
+                break;
+            case "is,":
+                result = "are,";
+                break;
+            case "is:":
+                result = "are:";
+                break;
+            case "is;":
+                result = "are;";
+                break;
+            case "is?":
+                result = "are?";
+                break;
+            case "is'":
+                result = "are'";
+                break;
+        }
+        return result;
+    }
 
+    private static void StartGame(boolean isColored) {
+        int randomNumToGuess = new Random().nextInt(10);
+        int userGuess;
+        if (isColored) {
+            System.out.println(ANSI_RED + "From 0 to 10, what number is in my head?");
+            stringHistory.add("From 0 to 10, what number is in my head?");
+            userGuess = new Scanner(System.in).nextInt();
+            stringHistory.add(String.valueOf(userGuess));
+            if (userGuess == randomNumToGuess) {
+                System.out.println(ANSI_RED + "You won. The number is " + randomNumToGuess);
+                stringHistory.add("You won. The number is " + randomNumToGuess);
+            }
+            if (userGuess != randomNumToGuess) {
+                System.out.println(ANSI_RED + "You lost. The number is " + randomNumToGuess);
+                stringHistory.add("You lost. The number is " + randomNumToGuess);
+            }
+        }
+        if (!isColored) {
+            System.out.println("From 0 to 10, what number is in my head?");
+            stringHistory.add("From 0 to 10, what number is in my head?");
+            userGuess = new Scanner(System.in).nextInt();
+            stringHistory.add(String.valueOf(userGuess));
+            if (userGuess == randomNumToGuess) {
+                System.out.println("You won. The number is " + randomNumToGuess);
+                stringHistory.add("You won. The number is " + randomNumToGuess);
+            }
+            if (userGuess != randomNumToGuess) {
+                System.out.println("You lost. The number is " + randomNumToGuess);
+                stringHistory.add("You lost. The number is " + randomNumToGuess);
+            }
+        }
     }
 }
