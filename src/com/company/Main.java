@@ -4,24 +4,27 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 public class Main {
+    //These HEDGE and QUANTIFIER are here to easy to debug if we make any changes
     private static final String HEDGE_1 = "Please tell me more";
     private static final String HEDGE_2 = "Many of my patients tell me the same thing";
     private static final String HEDGE_3 = "It is getting late, maybe we had better quit";
     private static final String QUANTIFIER_1 = "Why do you say that";
     private static final String QUANTIFIER_2 = "You seem to think that";
     private static final String QUANTIFIER_3 = "So, you are concerned that";
-    private static final String ANSI_RED = "\u001B[31m";
-    private static final List<String> stringHistory = new ArrayList<>();
+    private static final String ANSI_RED = "\u001B[31m";//This is to show red texts in the console
+    private static final List<String> stringHistory = new ArrayList<>();//This will add the whole conversation between user and Eliza
 
     public static void main(String[] args) {
-        String respond;
-        String echoRespond;
-        String hedgeAndQuantifier;
-        String respondPigLatin;
-        boolean loop = true;
+        String respond;//Variable respond is to take the user input
+        String echoRespond;//Variable echoRespind is to receive the changes of I and me-> you, my->your, and am->are from the method Echo() that takes the variable respond Echo(respond)
+        String hedgeAndQuantifier;//Variable hedgeAndQuantifier is to receive the random of themselves from the method RandomRespond() which return a String
+        String respondPigLatin;//Variable respondPigLatin is to receive the changes of the method PigLatin() which return a String if user inputs the variable respond ="pig"
+        boolean isLoop = true;//This
         boolean isRed;
+
         HelloToUser();
-        while (loop) {
+
+        while (isLoop) {
             System.out.println("Enter respond here or press Q to quit:");
             respond = new Scanner(System.in).nextLine();
             stringHistory.add(respond);
@@ -30,6 +33,7 @@ public class Main {
                 if (respond.equalsIgnoreCase("pig")) {
                     respondPigLatin = PigLatin();
                     System.out.println(ANSI_RED + respondPigLatin);
+                    stringHistory.add(respondPigLatin);
                 }
                 if (respond.equalsIgnoreCase("play game")) {
 
@@ -49,15 +53,19 @@ public class Main {
                             System.out.println(ANSI_RED + "Eliza: " + stringHistory.get(i) + "\n");
                         }
                     });
-                    loop = false;
+                    isLoop = false;
                 }
                 if (!respond.equalsIgnoreCase("q")
-                        && (hedgeAndQuantifier.equals(HEDGE_1) || hedgeAndQuantifier.equals(HEDGE_2) || hedgeAndQuantifier.equals(HEDGE_3))) {
+                        && (hedgeAndQuantifier.equals(HEDGE_1) || hedgeAndQuantifier.equals(HEDGE_2) || hedgeAndQuantifier.equals(HEDGE_3))
+                        && !respond.equalsIgnoreCase("pig")
+                        && !respond.equalsIgnoreCase("play game")) {
                     System.out.println(ANSI_RED + hedgeAndQuantifier);
                     stringHistory.add(hedgeAndQuantifier);
                 }
                 if (!respond.equalsIgnoreCase("q")
-                        && (hedgeAndQuantifier.equals(QUANTIFIER_1) || hedgeAndQuantifier.equals(QUANTIFIER_2) || hedgeAndQuantifier.equals(QUANTIFIER_3))) {
+                        && (hedgeAndQuantifier.equals(QUANTIFIER_1) || hedgeAndQuantifier.equals(QUANTIFIER_2) || hedgeAndQuantifier.equals(QUANTIFIER_3))
+                        && !respond.equalsIgnoreCase("pig")
+                        && !respond.equalsIgnoreCase("play game")) {
                     System.out.println(ANSI_RED + hedgeAndQuantifier + " " + echoRespond);
                     stringHistory.add(hedgeAndQuantifier + " " + echoRespond);
                 }
@@ -66,6 +74,7 @@ public class Main {
                 if (respond.equalsIgnoreCase("pig")) {
                     respondPigLatin = PigLatin();
                     System.out.println(respondPigLatin);
+                    stringHistory.add(respondPigLatin);
                 }
                 if (respond.equalsIgnoreCase("play game")) {
                     StartGame(isRed);
@@ -83,15 +92,19 @@ public class Main {
                             System.out.println("Eliza: " + stringHistory.get(i) + "\n");
                         }
                     });
-                    loop = false;
+                    isLoop = false;
                 }
                 if (!respond.equalsIgnoreCase("q")
-                        && (hedgeAndQuantifier.equals(HEDGE_1) || hedgeAndQuantifier.equals(HEDGE_2) || hedgeAndQuantifier.equals(HEDGE_3))) {
+                        && (hedgeAndQuantifier.equals(HEDGE_1) || hedgeAndQuantifier.equals(HEDGE_2) || hedgeAndQuantifier.equals(HEDGE_3))
+                        && !respond.equalsIgnoreCase("pig")
+                        && !respond.equalsIgnoreCase("play game")) {
                     System.out.println(hedgeAndQuantifier);
                     stringHistory.add(hedgeAndQuantifier);
                 }
                 if (!respond.equalsIgnoreCase("q")
-                        && (hedgeAndQuantifier.equals(QUANTIFIER_1) || hedgeAndQuantifier.equals(QUANTIFIER_2) || hedgeAndQuantifier.equals(QUANTIFIER_3))) {
+                        && (hedgeAndQuantifier.equals(QUANTIFIER_1) || hedgeAndQuantifier.equals(QUANTIFIER_2) || hedgeAndQuantifier.equals(QUANTIFIER_3))
+                        && !respond.equalsIgnoreCase("pig")
+                        && !respond.equalsIgnoreCase("play game")) {
                     System.out.println(hedgeAndQuantifier + " " + echoRespond);
                     stringHistory.add(hedgeAndQuantifier + " " + echoRespond);
                 }
@@ -155,14 +168,12 @@ public class Main {
             if (verifyList.get(i).matches("me[,?:'; ]")) {
                 verifyList.set(i, StringWithSymbol(verifyList.get(i)));
             }
-
         }
 
         for (int i = 0; i < verifyList.size(); i++) {
             result += verifyList.get(i) + " ";
         }
         return result.toUpperCase();
-
     }
 
     private static String RandomRespond() {
@@ -188,6 +199,7 @@ public class Main {
         List<String> wordArrayList = new ArrayList<>();
 
         System.out.println("\tPlease Type Something: ");
+        stringHistory.add("Please Type Something");
         prompt = new Scanner(System.in).nextLine();
         stringHistory.add(prompt);
         prompt.toUpperCase();
@@ -215,7 +227,7 @@ public class Main {
                 }
             }
         }
-        stringHistory.add(holders2.toString());
+//        stringHistory.add(holders2.toString());
         return holders2.toString();
     }
 
