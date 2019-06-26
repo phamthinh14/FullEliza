@@ -51,10 +51,12 @@ public class AdventureGameNormalText {
                 + "WARNING: THIS CASTLE HAS MANY TROLLS\n"
                 + " =>YOU CAN BE ROBBED MANY TIMES<=\n");
         System.out.println(welcomeUser.toString());
+//        return welcomeUser.toString();
     }
 
     public void DisplayCurrentGold() {
         System.out.println("Your total gold right now $" + String.format("%.2f", currentGold));
+//        return "Your total gold right now $" + String.format("%.2f", currentGold);
     }
 
     public void computeGold(int room) {
@@ -430,5 +432,15 @@ public class AdventureGameNormalText {
             result += aHistoryOfTheGame;
         }
         return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

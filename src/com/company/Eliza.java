@@ -43,6 +43,7 @@ public class Eliza {
         String echoRespond;//Variable echoRespond is to receive the changes of I and me-> you, my->your, and am->are from the method Echo() that takes the variable respond Echo(respond)
         String hedgeAndQuantifier;//Variable hedgeAndQuantifier is to receive the random of themselves from the method RandomRespond() which return a String
         String respondPigLatin;//Variable respondPigLatin is to receive the changes of the method PigLatin() which return a String if user inputs the variable respond ="pig"
+
         boolean isLoop = true;//This will return true or false to terminate the loop
         boolean isRed = false;
         //If the user input pig, Eliza will speak Pig Latin

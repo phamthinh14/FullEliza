@@ -21,31 +21,32 @@ import java.util.*;
  * *       South
  */
 public class AdventureGameInRedText extends AdventureGameNormalText {
-    private final String ANSI_RED = "\u001B[31m";//This is to show red texts in the console
-    private int countTrollRob = 0;
-    private double robbedTotal = 0;
-    private double currentGold = 0;
-    private boolean isSecretRoomUnlocked = false;
-    private Map<Integer, Boolean> castleMap = new HashMap<>();
-    private Map<Integer, String> roomItems = new HashMap<>();
-    private Map<Integer, Double> money = new HashMap<>();
-    private List<String> historyOfTheGame = new ArrayList<>();
-    private final String QUIT_GAME_PROMPT = ANSI_RED + "Type q to stop the game";
-    private final String FOYER_WELCOME = ANSI_RED + "\tYou are now in the FOYER room\n" + "This room has a: DEAD SCORPION\n";
-    private final String LIBRARY_WELCOME = ANSI_RED + "\tYou are now in the LIBRARY room\n" + "This room has a: SPIDERS\n";
-    private final String PARLOR_WELCOME = ANSI_RED + "\tYou are now in the PARLOR room\n" + "This room has a: TREASURE CHEST\n";
-    private final String FRONT_ROOM_WELCOME = ANSI_RED + "\tYou are now in the FRONT ROOM\n" + "This room has a: PIANO\n";
-    private final String KITCHEN_WELCOME = ANSI_RED + "\tYou are now in the KITCHEN\n" + "This room has a: BATS\n";
-    private final String DINING_ROOM_WELCOME = ANSI_RED + "\tYou are now in the DINING ROOM\n" + "This room has a: DUST AND EMPTYBOX\n";
-    private final String VAULT_WELCOME = ANSI_RED + "\tYou are now in the VAULT ROOM\n" + "This room has a: THREE WALKING SKELETONS\n";
-    private final String SECRET_ROOM_WELCOME = ANSI_RED + "\tYou are now in the SECRET ROOM\n" + "This room has a: PILES OF GOLD\n";
-
-    public AdventureGameInRedText() {
-    }
+//    private final String ANSI_RED = "\u001B[31m";//This is to show red texts in the console
+//    private int countTrollRob = 0;
+//    private double robbedTotal = 0;
+//    private double currentGold = 0;
+//    private boolean isSecretRoomUnlocked = false;
+//    private Map<Integer, Boolean> castleMap = new HashMap<>();
+//    private Map<Integer, String> roomItems = new HashMap<>();
+//    private Map<Integer, Double> money = new HashMap<>();
+//    private List<String> historyOfTheGame = new ArrayList<>();
+//    private final String QUIT_GAME_PROMPT = ANSI_RED + "Type q to stop the game";
+//    private final String FOYER_WELCOME = ANSI_RED + "\tYou are now in the FOYER room\n" + "This room has a: DEAD SCORPION\n";
+//    private final String LIBRARY_WELCOME = ANSI_RED + "\tYou are now in the LIBRARY room\n" + "This room has a: SPIDERS\n";
+//    private final String PARLOR_WELCOME = ANSI_RED + "\tYou are now in the PARLOR room\n" + "This room has a: TREASURE CHEST\n";
+//    private final String FRONT_ROOM_WELCOME = ANSI_RED + "\tYou are now in the FRONT ROOM\n" + "This room has a: PIANO\n";
+//    private final String KITCHEN_WELCOME = ANSI_RED + "\tYou are now in the KITCHEN\n" + "This room has a: BATS\n";
+//    private final String DINING_ROOM_WELCOME = ANSI_RED + "\tYou are now in the DINING ROOM\n" + "This room has a: DUST AND EMPTYBOX\n";
+//    private final String VAULT_WELCOME = ANSI_RED + "\tYou are now in the VAULT ROOM\n" + "This room has a: THREE WALKING SKELETONS\n";
+//    private final String SECRET_ROOM_WELCOME = ANSI_RED + "\tYou are now in the SECRET ROOM\n" + "This room has a: PILES OF GOLD\n";
+//
+//    public AdventureGameInRedText() {
+//        Welcome();
+//    }
 
     @Override
     public void Welcome() {
-        super.Welcome();
+        super.toString();
     }
 
     @Override
@@ -111,6 +112,16 @@ public class AdventureGameInRedText extends AdventureGameNormalText {
     @Override
     public String gameHistory() {
         return super.gameHistory();
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 
     //    public AdventureGameInRedText() {
