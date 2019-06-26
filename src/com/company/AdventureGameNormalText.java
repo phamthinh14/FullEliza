@@ -29,6 +29,15 @@ public class AdventureGameNormalText {
     private static Map<Integer, String> roomItems = new HashMap<>();
     private static Map<Integer, Double> money = new HashMap<>();
     private List<String> historyOfTheGame = new ArrayList<>();
+    private final String QUIT_GAME_PROMPT = "Type q to stop the game";
+    private final String FOYER_WELCOME = "\tYou are now in the FOYER room\n" + "This room has a: DEAD SCORPION\n";
+    private final String LIBRARY_WELCOME = "\tYou are now in the LIBRARY room\n" + "This room has a: SPIDERS\n";
+    private final String PARLOR_WELCOME = "\tYou are now in the PARLOR room\n" + "This room has a: TREASURE CHEST\n";
+    private final String FRONT_ROOM_WELCOME = "\tYou are now in the FRONT ROOM\n" + "This room has a: PIANO\n";
+    private final String KITCHEN_WELCOME = "\tYou are now in the KITCHEN\n" + "This room has a: BATS\n";
+    private final String DINING_ROOM_WELCOME = "\tYou are now in the DINING ROOM\n" + "This room has a: DUST AND EMPTYBOX\n";
+    private final String VAULT_WELCOME = "\tYou are now in the VAULT ROOM\n" + "This room has a: THREE WALKING SKELETONS\n";
+    private final String SECRET_ROOM_WELCOME = "\tYou are now in the SECRET ROOM\n" + "This room has a: PILES OF GOLD\n";
 
     public AdventureGameNormalText() {
         Welcome();
@@ -36,17 +45,19 @@ public class AdventureGameNormalText {
     }
 
     public void Welcome() {
-        System.out.println("\t Welcome to the castle");
-        System.out.println("\t *********************");
-        System.out.println("WARNING: THIS CASTLE HAS MANY TROLLS");
-        System.out.println(" =>YOU CAN BE ROBBED MANY TIMES<=");
+        StringBuilder welcomeUser = new StringBuilder();
+        welcomeUser.append("\t Welcome to the castle\n"
+                + "\t *********************\n"
+                + "WARNING: THIS CASTLE HAS MANY TROLLS\n"
+                + " =>YOU CAN BE ROBBED MANY TIMES<=\n");
+        System.out.println(welcomeUser.toString());
     }
 
-    private void DisplayCurrentGold() {
+    public void DisplayCurrentGold() {
         System.out.println("Your total gold right now $" + String.format("%.2f", currentGold));
     }
 
-    private void computeGold(int room) {
+    public void computeGold(int room) {
         int troll = 1 + new Random().nextInt(7);
         if (!money.containsKey(room)) {
             double gold;
@@ -69,22 +80,21 @@ public class AdventureGameNormalText {
 
     }
 
-    private void Foyer() {
+    public void Foyer() {
         boolean quit = false;
         String userInput = "";
-        System.out.println("\tYou are now in the FOYER room");
-        System.out.println("This room has a: DEAD SCORPION");
+
+        System.out.println(FOYER_WELCOME);
         castleMap.put(1, true);
         roomItems.put(1, "Dead Scorpion");
         computeGold(1);
-
-        direction(1);
-        System.out.println("Type q to stop the game");
+        DisplayDirection(1);
+        System.out.println(QUIT_GAME_PROMPT);
         DisplayCurrentGold();
         userInput = new Scanner(System.in).nextLine();
         while (!(userInput.equalsIgnoreCase("n") || userInput.equalsIgnoreCase("north") || userInput.equalsIgnoreCase("q"))) {
-            direction(1);
-            System.out.println("Type q to stop the game");
+            DisplayDirection(1);
+            System.out.println(QUIT_GAME_PROMPT);
             DisplayCurrentGold();
             userInput = new Scanner(System.in).nextLine();
         }
@@ -97,28 +107,28 @@ public class AdventureGameNormalText {
 
     }
 
-    private void Library() {
+    public void Library() {
         boolean quit = false;
         String userInput;
-        System.out.println("\tYou are now in the LIBRARY");
-        System.out.println("This room has a: SPIDERS");
+
+        System.out.println(LIBRARY_WELCOME);
         castleMap.put(3, true);
         roomItems.put(3, "Spiders");
         computeGold(3);
-        direction(1);
-        direction(2);
-        direction(3);
-        System.out.println("Type q to stop the game");
+        DisplayDirection(1);
+        DisplayDirection(2);
+        DisplayDirection(3);
+        System.out.println(QUIT_GAME_PROMPT);
         DisplayCurrentGold();
         userInput = new Scanner(System.in).nextLine();
         while (!(userInput.equalsIgnoreCase("n") || userInput.equalsIgnoreCase("north") ||
                 userInput.equalsIgnoreCase("w") || userInput.equalsIgnoreCase("west") ||
                 userInput.equalsIgnoreCase("e") || userInput.equalsIgnoreCase("east") ||
                 userInput.equalsIgnoreCase("q"))) {
-            direction(1);
-            direction(2);
-            direction(3);
-            System.out.println("Type q to stop the game");
+            DisplayDirection(1);
+            DisplayDirection(2);
+            DisplayDirection(3);
+            System.out.println(QUIT_GAME_PROMPT);
             DisplayCurrentGold();
             userInput = new Scanner(System.in).nextLine();
         }
@@ -137,25 +147,24 @@ public class AdventureGameNormalText {
 
     }
 
-    private void Parlor() {
+    public void Parlor() {
         boolean quit = false;
         String userInput;
-        System.out.println("\tYou are now in the PARLOR");
-        System.out.println("This room has a: TREASURE CHEST");
+        System.out.println(PARLOR_WELCOME);
         castleMap.put(4, true);
         roomItems.put(4, "Treasure Chest");
         computeGold(4);
-        direction(1);
-        direction(2);
-        System.out.println("Type q to stop the game");
+        DisplayDirection(1);
+        DisplayDirection(2);
+        System.out.println(QUIT_GAME_PROMPT);
         DisplayCurrentGold();
         userInput = new Scanner(System.in).nextLine();
         while (!(userInput.equalsIgnoreCase("n") || userInput.equalsIgnoreCase("north") ||
                 userInput.equalsIgnoreCase("w") || userInput.equalsIgnoreCase("west") ||
                 userInput.equalsIgnoreCase("q"))) {
-            direction(1);
-            direction(2);
-            System.out.println("Type q to stop the game");
+            DisplayDirection(1);
+            DisplayDirection(2);
+            System.out.println(QUIT_GAME_PROMPT);
             DisplayCurrentGold();
             userInput = new Scanner(System.in).nextLine();
         }
@@ -171,28 +180,27 @@ public class AdventureGameNormalText {
 
     }
 
-    private void DiningRoom() {
+    public void DiningRoom() {
         boolean quit = false;
         String userInput;
-        System.out.println("\tYou are now in the DINING ROOM");
-        System.out.println("This room has a: DUST AND EMPTY BOX");
+        System.out.println(DINING_ROOM_WELCOME);
         castleMap.put(6, true);
         roomItems.put(6, "Dust and Empty Box");
         computeGold(6);
-        direction(2);
-        direction(3);
-        direction(4);
-        System.out.println("Type q to stop the game");
+        DisplayDirection(2);
+        DisplayDirection(3);
+        DisplayDirection(4);
+        System.out.println(QUIT_GAME_PROMPT);
         DisplayCurrentGold();
         userInput = new Scanner(System.in).nextLine();
         while (!(userInput.equalsIgnoreCase("s") || userInput.equalsIgnoreCase("south") ||
                 userInput.equalsIgnoreCase("w") || userInput.equalsIgnoreCase("west") ||
                 userInput.equalsIgnoreCase("e") || userInput.equalsIgnoreCase("east") ||
                 userInput.equalsIgnoreCase("q"))) {
-            direction(2);
-            direction(3);
-            direction(4);
-            System.out.println("Type q to stop the game");
+            DisplayDirection(2);
+            DisplayDirection(3);
+            DisplayDirection(4);
+            System.out.println(QUIT_GAME_PROMPT);
             DisplayCurrentGold();
             userInput = new Scanner(System.in).nextLine();
         }
@@ -211,11 +219,10 @@ public class AdventureGameNormalText {
 
     }
 
-    private void Vault() {
+    public void Vault() {
         boolean quit = false;
         String userInput;
-        System.out.println("\tYou are now in the VAULT");
-        System.out.println("This room has a: THREE SKELETONS");
+        System.out.println(VAULT_WELCOME);
         castleMap.put(7, true);
         roomItems.put(7, "Three Skeletons");
         computeGold(7);
@@ -225,19 +232,19 @@ public class AdventureGameNormalText {
             isSecretRoomUnlocked = true;
         }
         if (isSecretRoomUnlocked) {
-            direction(1);
+            DisplayDirection(1);
         }
-        direction(2);
-        direction(4);
-        System.out.println("Type q to stop the game");
+        DisplayDirection(2);
+        DisplayDirection(4);
+        System.out.println(QUIT_GAME_PROMPT);
         DisplayCurrentGold();
         userInput = new Scanner(System.in).nextLine();
         while (!isSecretRoomUnlocked && !(userInput.equalsIgnoreCase("w") || userInput.equalsIgnoreCase("west") ||
                 userInput.equalsIgnoreCase("s") || userInput.equalsIgnoreCase("south") ||
                 userInput.equalsIgnoreCase("q"))) {
-            direction(2);
-            direction(4);
-            System.out.println("Type q to stop the game");
+            DisplayDirection(2);
+            DisplayDirection(4);
+            System.out.println(QUIT_GAME_PROMPT);
             DisplayCurrentGold();
             userInput = new Scanner(System.in).nextLine();
         }
@@ -245,10 +252,10 @@ public class AdventureGameNormalText {
                 userInput.equalsIgnoreCase("s") || userInput.equalsIgnoreCase("south") ||
                 userInput.equalsIgnoreCase("n") || userInput.equalsIgnoreCase("north") ||
                 userInput.equalsIgnoreCase("q"))) {
-            direction(1);
-            direction(2);
-            direction(4);
-            System.out.println("Type q to stop the game");
+            DisplayDirection(1);
+            DisplayDirection(2);
+            DisplayDirection(4);
+            System.out.println(QUIT_GAME_PROMPT);
             DisplayCurrentGold();
             userInput = new Scanner(System.in).nextLine();
         }
@@ -266,29 +273,27 @@ public class AdventureGameNormalText {
         if (userInput.equalsIgnoreCase("q")) {
             quit = quit();
         }
-
     }
 
-    private void SecretRoom() {
+    public void SecretRoom() {
         boolean quit = false;
         String userInput;
-        System.out.println("\tYou are now in the SECRET ROOM");
-        System.out.println("This room has a: PILES OF GOLD");
+        System.out.println(SECRET_ROOM_WELCOME);
         castleMap.put(8, true);
         roomItems.put(8, "Piles of gold");
         computeGold(8);
-        direction(2);
-        direction(4);
-        System.out.println("Type q to stop the game");
+        DisplayDirection(2);
+        DisplayDirection(4);
+        System.out.println(QUIT_GAME_PROMPT);
         DisplayCurrentGold();
         userInput = new Scanner(System.in).nextLine();
         while (!(userInput.equalsIgnoreCase("w") || userInput.equalsIgnoreCase("west") ||
                 userInput.equalsIgnoreCase("s") || userInput.equalsIgnoreCase("south") ||
                 userInput.equalsIgnoreCase("q"))) {
             computeGold(8);
-            direction(2);
-            direction(4);
-            System.out.println("Type q to stop the game");
+            DisplayDirection(2);
+            DisplayDirection(4);
+            System.out.println(QUIT_GAME_PROMPT);
             DisplayCurrentGold();
         }
         if (userInput.equalsIgnoreCase("w") || userInput.equalsIgnoreCase("west")) {
@@ -303,28 +308,27 @@ public class AdventureGameNormalText {
 
     }
 
-    private void FrontRoom() {
+    public void FrontRoom() {
         boolean quit = false;
         String userInput = "";
-        System.out.println("\tYou are now in the FRONT ROOM");
-        System.out.println("This room has a: PIANO");
+        System.out.println(FRONT_ROOM_WELCOME);
         castleMap.put(2, true);
         roomItems.put(2, "Piano");
         computeGold(2);
-        direction(1);
-        direction(3);
-        direction(4);
-        System.out.println("Type q to stop the game");
+        DisplayDirection(1);
+        DisplayDirection(3);
+        DisplayDirection(4);
+        System.out.println(QUIT_GAME_PROMPT);
         DisplayCurrentGold();
         userInput = new Scanner(System.in).nextLine();
         while (!(userInput.equalsIgnoreCase("n") || userInput.equalsIgnoreCase("north") ||
                 userInput.equalsIgnoreCase("e") || userInput.equalsIgnoreCase("east") ||
                 userInput.equalsIgnoreCase("s") || userInput.equalsIgnoreCase("south") ||
                 userInput.equalsIgnoreCase("q"))) {
-            direction(1);
-            direction(3);
-            direction(4);
-            System.out.println("Type q to stop the game");
+            DisplayDirection(1);
+            DisplayDirection(3);
+            DisplayDirection(4);
+            System.out.println(QUIT_GAME_PROMPT);
             DisplayCurrentGold();
             userInput = new Scanner(System.in).nextLine();
         }
@@ -343,25 +347,24 @@ public class AdventureGameNormalText {
 
     }
 
-    private void Kitchen() {
+    public void Kitchen() {
         boolean quit = false;
         String userInput;
-        System.out.println("\tYou are now in the KITCHEN");
-        System.out.println("This room has a: BATS");
+        System.out.println(KITCHEN_WELCOME);
         castleMap.put(5, true);
         roomItems.put(5, "Bats");
         computeGold(5);
-        direction(3);
-        direction(4);
-        System.out.println("Type q to stop the game");
+        DisplayDirection(3);
+        DisplayDirection(4);
+        System.out.println(QUIT_GAME_PROMPT);
         DisplayCurrentGold();
         userInput = new Scanner(System.in).nextLine();
         while (!(userInput.equalsIgnoreCase("e") || userInput.equalsIgnoreCase("east") ||
                 userInput.equalsIgnoreCase("s") || userInput.equalsIgnoreCase("south") ||
                 userInput.equalsIgnoreCase("q"))) {
-            direction(3);
-            direction(4);
-            System.out.println("Type q to stop the game");
+            DisplayDirection(3);
+            DisplayDirection(4);
+            System.out.println(QUIT_GAME_PROMPT);
             DisplayCurrentGold();
             userInput = new Scanner(System.in).nextLine();
         }
@@ -377,7 +380,7 @@ public class AdventureGameNormalText {
 
     }
 
-    private void direction(int number) {
+    public void DisplayDirection(int number) {
         if (number == 1) {
             System.out.println("Type N or North to go to the North");
         }
@@ -392,7 +395,7 @@ public class AdventureGameNormalText {
         }
     }
 
-    private boolean quit() {
+    public boolean quit() {
         int count = 1;
         int random = new Random().nextInt(4);
         if (random == 3) {

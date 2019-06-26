@@ -217,8 +217,6 @@ public class Eliza {
      * @param isColored to display text in red or black
      */
     private void StartGame(boolean isColored) {
-        int randomNumToGuess = new Random().nextInt(10);
-        int userGuess;
         if (isColored) {
             AdventureGameInRedText historyOfGame = new AdventureGameInRedText();
             stringHistory.add(historyOfGame.gameHistory());
